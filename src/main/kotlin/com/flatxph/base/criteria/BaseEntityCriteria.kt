@@ -1,4 +1,4 @@
-package com.flatxph.address.criteria
+package com.flatxph.base.criteria
 
 import com.flatxph.base.DataObject
 import com.flatxph.base.empty

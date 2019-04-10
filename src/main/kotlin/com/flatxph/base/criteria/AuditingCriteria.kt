@@ -1,4 +1,4 @@
-package com.flatxph.address.criteria
+package com.flatxph.base.criteria
 
 import com.flatxph.base.empty
 import io.github.jhipster.service.filter.InstantFilter

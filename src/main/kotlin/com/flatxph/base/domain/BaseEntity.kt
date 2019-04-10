@@ -1,4 +1,4 @@
-package com.flatxph.address.domain
+package com.flatxph.base.domain
 
 import com.flatxph.base.DataObject
 import javax.persistence.*

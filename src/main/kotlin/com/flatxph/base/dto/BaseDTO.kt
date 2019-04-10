@@ -1,4 +1,4 @@
-package com.flatxph.address.dto
+package com.flatxph.base.dto
 
 import com.flatxph.base.DataObject
 

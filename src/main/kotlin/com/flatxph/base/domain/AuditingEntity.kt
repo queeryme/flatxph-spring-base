@@ -1,4 +1,4 @@
-package com.flatxph.address.domain
+package com.flatxph.base.domain
 
 import org.hibernate.envers.Audited
 import org.springframework.data.annotation.CreatedBy

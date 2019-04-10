@@ -1,4 +1,4 @@
-package com.flatxph.address.dto
+package com.flatxph.base.dto
 
 import org.springframework.data.annotation.ReadOnlyProperty
 import java.time.Instant
