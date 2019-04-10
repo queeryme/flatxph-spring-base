@@ -17,6 +17,6 @@ abstract class AuditingDTO : BaseDTO() {
 
     override val fieldsString: String
         get() = "createdBy='$createdBy', createdDate='$createdDate', lastModifiedBy='$lastModifiedBy', " +
-                "lastModifiedDate='$lastModifiedDate'"
+                "lastModifiedDate='$lastModifiedDate', ${super.fieldsString}"
 
 }
