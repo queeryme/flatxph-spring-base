@@ -1,8 +1,10 @@
 package com.flatxph.base
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
 
-abstract class DataObject: Serializable {
+@JsonIgnoreProperties(value = ["fieldsString"], ignoreUnknown = true)
+abstract class DataObject : Serializable {
 
     abstract val fieldsString: String?
 

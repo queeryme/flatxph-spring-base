@@ -15,12 +15,6 @@ interface AuditingEntityMapper<D : AuditingDTO, E : AuditingEntity> : BaseEntity
     )
     override fun toEntity(dto: D): E
 
-    @Mappings(
-            Mapping(target = "createdBy", ignore = true),
-            Mapping(target = "createdDate", ignore = true),
-            Mapping(target = "lastModifiedBy", ignore = true),
-            Mapping(target = "lastModifiedDate", ignore = true)
-    )
     override fun toDto(entity: E): D
 
 }

@@ -13,10 +13,10 @@ import java.util.*
 
 @Transactional
 abstract class BaseEntityServiceImpl<D : AuditingDTO, E : AuditingEntity>(
-        private val repository: BaseEntityRepository<E>,
-        private val mapper: BaseEntityMapper<D, E>,
-        private val log: Logger,
-        private val entityName: String
+        protected val repository: BaseEntityRepository<E>,
+        protected val mapper: BaseEntityMapper<D, E>,
+        protected val log: Logger,
+        protected val entityName: String
 ) : AuditingEntityService<D> {
 
     override fun save(dto: D): D {
