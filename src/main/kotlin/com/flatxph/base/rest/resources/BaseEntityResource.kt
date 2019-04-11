@@ -34,7 +34,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
 
     @GetMapping("/")
     @Timed
-    open fun readAll(criteria: C, pageable: Pageable): ResponseEntity<List<D>> {
+    protected open fun readAll(criteria: C, pageable: Pageable): ResponseEntity<List<D>> {
         log.debug("REST request to get $entityName by criteria: $criteria, $pageable")
         val page = queryService.findByCriteria(criteria, pageable)
         val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/$entityName")
@@ -43,7 +43,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
 
     @GetMapping("/{id}")
     @Timed
-    open fun readOne(@PathVariable id: Long): ResponseEntity<D> {
+    protected open fun readOne(@PathVariable id: Long): ResponseEntity<D> {
         log.debug("REST request to get $entityName : $id")
         val dto = service.findOne(id)
         return ResponseUtil.wrapOrNotFound(dto)
@@ -52,7 +52,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
     @PostMapping("/")
     @Timed
     @Throws(URISyntaxException::class)
-    open fun create(@Valid @RequestBody dto: D): ResponseEntity<D> {
+    protected open fun create(@Valid @RequestBody dto: D): ResponseEntity<D> {
         log.debug("REST request to save $entityName : $dto")
         if (dto.id != null) {
             throw BadRequestAlertException("A new $entityName cannot already have an ID", entityName, "idExists")
@@ -66,7 +66,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
     @PutMapping("/")
     @Timed
     @Throws(URISyntaxException::class)
-    open fun update(@Valid @RequestBody dto: D): ResponseEntity<D> {
+    protected open fun update(@Valid @RequestBody dto: D): ResponseEntity<D> {
         log.debug("REST request to update $entityName : $dto")
         if (dto.id == null) {
             throw BadRequestAlertException("Invalid id", entityName, "idNull")
@@ -79,7 +79,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
 
     @DeleteMapping("/{id}")
     @Timed
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    protected open fun delete(@PathVariable id: Long): ResponseEntity<Void> {
         log.debug("REST request to delete $entityName : $id")
         service.delete(id)
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(entityName, id.toString())).build()
