@@ -32,7 +32,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
         val entityName: String
 ) {
 
-    @GetMapping("/")
+    @GetMapping
     @Timed
     protected open fun readAll(criteria: C, pageable: Pageable): ResponseEntity<List<D>> {
         log.debug("REST request to get $entityName by criteria: $criteria, $pageable")
@@ -41,7 +41,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
         return ResponseEntity(page.content, headers, HttpStatus.OK)
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     @Timed
     protected open fun readOne(@PathVariable id: Long): ResponseEntity<D> {
         log.debug("REST request to get $entityName : $id")
@@ -49,7 +49,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
         return ResponseUtil.wrapOrNotFound(dto)
     }
 
-    @PostMapping("/")
+    @PostMapping
     @Timed
     @Throws(URISyntaxException::class)
     protected open fun create(@Valid @RequestBody dto: D): ResponseEntity<D> {
@@ -63,7 +63,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
                 .body(result)
     }
 
-    @PutMapping("/")
+    @PutMapping
     @Timed
     @Throws(URISyntaxException::class)
     protected open fun update(@Valid @RequestBody dto: D): ResponseEntity<D> {
@@ -77,7 +77,7 @@ abstract class BaseEntityResource<E : BaseEntity, D : BaseDTO, C : BaseEntityCri
                 .body(result)
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @Timed
     protected open fun delete(@PathVariable id: Long): ResponseEntity<Void> {
         log.debug("REST request to delete $entityName : $id")
