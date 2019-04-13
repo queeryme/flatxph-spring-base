@@ -3,7 +3,7 @@ package com.flatxph.base.domain
 import com.flatxph.base.DataObject
 import java.util.*
 import javax.persistence.*
-import kotlin.reflect.KMutableProperty0
+import kotlin.reflect.KProperty0
 
 @MappedSuperclass
 abstract class BaseEntity : DataObject() {
@@ -12,7 +12,7 @@ abstract class BaseEntity : DataObject() {
     @SequenceGenerator(name = "sequenceGenerator")
     open var id: Long? = null
 
-    override val fieldList: List<KMutableProperty0<out Any?>>
+    override val fieldList: List<KProperty0<Any?>>
         get() = listOf(this::id) + super.fieldList
 
     override fun equals(other: Any?): Boolean {

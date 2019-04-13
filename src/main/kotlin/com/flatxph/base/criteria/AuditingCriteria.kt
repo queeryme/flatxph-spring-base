@@ -2,7 +2,7 @@ package com.flatxph.base.criteria
 
 import io.github.jhipster.service.filter.InstantFilter
 import io.github.jhipster.service.filter.StringFilter
-import kotlin.reflect.KMutableProperty0
+import kotlin.reflect.KProperty0
 
 abstract class AuditingCriteria : BaseEntityCriteria() {
 
@@ -14,7 +14,7 @@ abstract class AuditingCriteria : BaseEntityCriteria() {
 
     var lastModifiedDate: InstantFilter? = null
 
-    override val fieldList: List<KMutableProperty0<out Any?>>
+    override val fieldList: List<KProperty0<Any?>>
         get() = listOf(this::createdBy,
                 this::createdDate,
                 this::lastModifiedBy,

@@ -2,12 +2,12 @@ package com.flatxph.base.criteria
 
 import com.flatxph.base.DataObject
 import io.github.jhipster.service.filter.LongFilter
-import kotlin.reflect.KMutableProperty0
+import kotlin.reflect.KProperty0
 
 abstract class BaseEntityCriteria : DataObject() {
 
     var id: LongFilter? = null
 
-    override val fieldList: List<KMutableProperty0<out Any?>>
+    override val fieldList: List<KProperty0<Any?>>
         get() = listOf(this::id) + super.fieldList
 }

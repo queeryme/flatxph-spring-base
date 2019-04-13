@@ -3,13 +3,13 @@ package com.flatxph.base.dto
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.flatxph.base.DataObject
 import java.util.*
-import kotlin.reflect.KMutableProperty0
+import kotlin.reflect.KProperty0
 
 
 abstract class BaseDTO : DataObject() {
     var id: Long? = null
 
-    override val fieldList: List<KMutableProperty0<out Any?>>
+    override val fieldList: List<KProperty0<Any?>>
         @JsonIgnore
         get() = listOf(this::id) + super.fieldList
 
