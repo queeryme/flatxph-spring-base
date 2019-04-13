@@ -2,6 +2,7 @@ package com.flatxph.base.dto
 
 import org.springframework.data.annotation.ReadOnlyProperty
 import java.time.Instant
+import kotlin.reflect.KMutableProperty0
 
 abstract class AuditingDTO : BaseDTO() {
 
@@ -15,8 +16,7 @@ abstract class AuditingDTO : BaseDTO() {
 
     var lastModifiedDate: Instant? = Instant.now()
 
-    override val fieldsString: String
-        get() = "createdBy='$createdBy', createdDate='$createdDate', lastModifiedBy='$lastModifiedBy', " +
-                "lastModifiedDate='$lastModifiedDate', ${super.fieldsString}"
+    override val fieldList: List<KMutableProperty0<out Any?>>
+        get() = listOf(this::createdBy, this::createdDate, this::lastModifiedBy, this::lastModifiedDate) + super.fieldList
 
 }

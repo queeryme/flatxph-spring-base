@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate
 import java.time.Instant
 import javax.persistence.Column
 import javax.persistence.MappedSuperclass
+import kotlin.reflect.KMutableProperty0
 
 /**
  * Base abstract class for entities which will hold definitions for created, last modified by and created,
@@ -33,8 +34,7 @@ abstract class AuditingEntity : BaseEntity() {
     @Column(name = "last_modified_date")
     var lastModifiedDate: Instant? = Instant.now()
 
-    override val fieldsString: String
-        get() = "createdBy='$createdBy', createdDate='$createdDate', lastModifiedBy='$lastModifiedBy', " +
-                "lastModifiedDate='$lastModifiedDate'"
+    override val fieldList: List<KMutableProperty0<out Any?>>
+        get() = listOf(this::createdBy, this::createdDate, this::lastModifiedBy, this::lastModifiedDate) + super.fieldList
 
 }
