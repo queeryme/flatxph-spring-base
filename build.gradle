@@ -35,6 +35,12 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Hazelcast Cache Configuration
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'com.hazelcast:hazelcast-client'
+	implementation 'com.hazelcast:hazelcast'
+	implementation 'com.hazelcast:hazelcast-spring'
+
 	// Metamodel Generator
 	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.4.2.Final'
 	kapt 'org.hibernate:hibernate-jpamodelgen:5.4.2.Final'
