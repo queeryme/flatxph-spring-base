@@ -21,18 +21,19 @@ import org.springframework.beans.factory.annotation.Value
 abstract class BaseHazelcastConfiguration {
 
     @Value("\${spring.application.name}")
-    private val applicationName: String? = null
+    protected val applicationName: String? = null
 
-    open fun hazelcastConfiguration(): Config {
-        val mapConfig = MapConfig().apply {
-            name = "configuration"
-            maxSizeConfig = MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE)
-            evictionPolicy = EvictionPolicy.LRU
-            timeToLiveSeconds = 3600
-        }
+    open fun buildMapConfig() = MapConfig().apply {
+        name = "configuration"
+        maxSizeConfig = MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE)
+        evictionPolicy = EvictionPolicy.LRU
+        timeToLiveSeconds = 3600
+    }
+
+    open fun buildHazelcastConfiguration(): Config {
         return Config().apply {
             instanceName = applicationName
-            addMapConfig(mapConfig)
+            addMapConfig(buildMapConfig())
         }
     }
 }
