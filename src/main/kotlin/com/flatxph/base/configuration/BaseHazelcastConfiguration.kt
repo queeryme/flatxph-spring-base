@@ -24,7 +24,7 @@ abstract class BaseHazelcastConfiguration {
     protected val applicationName: String? = null
 
     open fun buildMapConfig() = MapConfig().apply {
-        name = "configuration"
+        name = applicationName
         maxSizeConfig = MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE)
         evictionPolicy = EvictionPolicy.LRU
         timeToLiveSeconds = 3600
@@ -32,6 +32,7 @@ abstract class BaseHazelcastConfiguration {
 
     open fun buildHazelcastConfig() = Config().apply {
         instanceName = applicationName
+        groupConfig.name = applicationName
         addMapConfig(buildMapConfig())
     }
 }
