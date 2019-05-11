@@ -10,18 +10,41 @@ apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
 
 group = 'com.flatxph'
-version = '0.0.18'
+version = '0.0.21'
 sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
 }
 
+ext {
+	// Common Library Versions
+	set('jhipsterVersion', '3.0.0')
+	set('zalandoProblemVersion', '0.23.0')
+
+	// Custom Library Versions
+	set('jsonWebTokenVersion', '0.9.1')
+}
 dependencies {
-	implementation 'org.zalando:problem-spring-web:0.23.0'
+
+	// Security Dependencies
+	implementation "io.jsonwebtoken:jjwt:${jsonWebTokenVersion}"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-oauth2-client'
+
+	// Basic Spring Framework Dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Kotlin Dependencies
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+	// JHipster Code Dependencies
+	implementation "io.github.jhipster:jhipster-framework:${jhipsterVersion}"
+	implementation "org.zalando:problem-spring-web:${zalandoProblemVersion}"
+
 	implementation 'io.github.jhipster:jhipster-framework:3.0.0'
 	implementation 'org.hibernate:hibernate-entitymanager'
 	implementation 'org.hibernate:hibernate-envers'
@@ -53,6 +76,7 @@ dependencies {
 	implementation "org.apache.commons:commons-lang3"
 }
 
+//noinspection GroovyAssignabilityCheck
 tasks.withType(JavaCompile) {
 	options.compilerArgs = [
 			'-Amapstruct.suppressGeneratorTimestamp=true'
