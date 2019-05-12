@@ -10,7 +10,7 @@ apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
 
 group = 'com.flatxph'
-version = '0.0.23'
+version = '0.0.24'
 sourceCompatibility = '1.8'
 
 repositories {
