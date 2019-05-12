@@ -1,8 +1,11 @@
 package com.flatxph.base.security
 
+import com.flatxph.base.security.JwtConstants.ClaimConstants.AUTHORITIES
+import com.flatxph.base.security.JwtConstants.ClaimConstants.EMAIL
+import com.flatxph.base.security.JwtConstants.PREFIX
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -25,14 +28,14 @@ class TokenAuthenticationFilter(
 ) : OncePerRequestFilter() {
 
     private fun getJwtFromRequest(request: HttpServletRequest): String? {
-        val bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION)
-        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        val bearerToken = request.getHeader(AUTHORIZATION)
+        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("$PREFIX ")) {
             bearerToken.substring(7, bearerToken.length)
         } else null
     }
 
     private fun getAuthorities(claims: Claims): List<SimpleGrantedAuthority> {
-        val authoritiesUntyped = claims.getOrDefault("authorities", emptyList<String>())
+        val authoritiesUntyped = claims.getOrDefault(AUTHORITIES, emptyList<String>())
         val authorities = if (authoritiesUntyped is List<*>) authoritiesUntyped else emptyList<Any>()
         return authorities.stream()
                 .filter { it is String }
@@ -47,7 +50,7 @@ class TokenAuthenticationFilter(
 
         try {
             val claims = Jwts.parser().setSigningKey(tokenSecret).parseClaimsJws(jwt).body
-            val email = claims["email"] ?: throw BadCredentialsException("Email of Claims does not exist.")
+            val email = claims[EMAIL] ?: throw BadCredentialsException("Email of Claims does not exist.")
             val authorities = getAuthorities(claims)
             val authentication = UsernamePasswordAuthenticationToken(email, jwt, authorities)
 
