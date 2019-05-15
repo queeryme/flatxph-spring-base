@@ -7,6 +7,7 @@ import com.flatxph.base.rest.errors.BadRequestAlertException
 import com.flatxph.base.rest.util.HeaderUtil
 import com.flatxph.base.rest.util.PaginationUtil
 import com.flatxph.base.service.definition.BaseEntityService
+import com.flatxph.base.service.definition.ReadEntityService
 import com.flatxph.base.service.query.BaseEntityQueryService
 import io.github.jhipster.web.util.ResponseUtil
 import org.slf4j.Logger
@@ -29,7 +30,7 @@ fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readAllMixin(
 }
 
 fun <D : BaseDTO> readOneMixin(
-        service: BaseEntityService<D>,
+        service: ReadEntityService<D>,
         entityName: String,
         log: Logger,
         id: Long
