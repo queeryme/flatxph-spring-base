@@ -8,9 +8,15 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
+
+allOpen {
+	annotation "javax.persistence.Entity"
+	annotation "javax.persistence.MappedSuperclass"
+}
 
 group = 'com.flatxph'
-version = '0.0.26'
+version = '0.0.27'
 sourceCompatibility = '1.8'
 
 repositories {
