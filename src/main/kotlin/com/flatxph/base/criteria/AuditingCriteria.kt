@@ -14,7 +14,7 @@ abstract class AuditingCriteria : BaseEntityCriteria() {
 
     var lastModifiedDate: InstantFilter? = null
 
-    override val fieldList: List<KProperty0<Any?>>
+    override val fieldList
         get() = listOf(this::createdBy,
                 this::createdDate,
                 this::lastModifiedBy,

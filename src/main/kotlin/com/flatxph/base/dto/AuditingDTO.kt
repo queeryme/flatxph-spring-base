@@ -1,8 +1,8 @@
 package com.flatxph.base.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.ReadOnlyProperty
 import java.time.Instant
-import kotlin.reflect.KProperty0
 
 abstract class AuditingDTO : BaseDTO() {
 
@@ -16,7 +16,8 @@ abstract class AuditingDTO : BaseDTO() {
 
     var lastModifiedDate: Instant? = Instant.now()
 
-    override val fieldList: List<KProperty0<Any?>>
+    override val fieldList
+        @JsonIgnore
         get() = listOf(this::createdBy, this::createdDate, this::lastModifiedBy, this::lastModifiedDate) + super.fieldList
 
 }

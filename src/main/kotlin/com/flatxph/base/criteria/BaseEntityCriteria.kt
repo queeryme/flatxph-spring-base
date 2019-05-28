@@ -8,6 +8,6 @@ abstract class BaseEntityCriteria : DataObject() {
 
     var id: LongFilter? = null
 
-    override val fieldList: List<KProperty0<Any?>>
+    override val fieldList
         get() = listOf(this::id) + super.fieldList
 }

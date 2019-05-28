@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty0
 abstract class BaseDTO : DataObject() {
     var id: Long? = null
 
-    override val fieldList: List<KProperty0<Any?>>
+    override val fieldList
         @JsonIgnore
         get() = listOf(this::id) + super.fieldList
 
