@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty0
 @JsonIgnoreProperties(value = ["fieldList"], ignoreUnknown = true)
 abstract class DataObject : Serializable {
 
-    open val fieldList: List<KProperty0<Any?>> = listOf()
+    open val fieldList = listOf<KProperty0<Any?>>()
 
     override fun toString(): String {
         val fieldString = fieldList.stream()
