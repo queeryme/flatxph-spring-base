@@ -16,7 +16,7 @@ allOpen {
 }
 
 group = 'com.flatxph'
-version = '0.0.28'
+version = '0.0.29'
 sourceCompatibility = '1.8'
 
 repositories {
