@@ -1,10 +1,14 @@
 package com.flatxph.base.service.definition
 
+import com.flatxph.base.domain.BaseEntity
 import com.flatxph.base.dto.BaseDTO
+import com.flatxph.base.mapper.BaseEntityMapper
 
-interface BaseEntityService<D : BaseDTO> : ReadEntityService<D> {
+interface BaseEntityService<E : BaseEntity> : ReadEntityService<E> {
 
-    fun save(dto: D): D
+    fun <D : BaseDTO> save(dto: D, mapper: BaseEntityMapper<D, E>): D
+
+    fun save(entity: E): E
 
     fun delete(id: Long)
 

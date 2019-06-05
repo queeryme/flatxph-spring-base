@@ -2,7 +2,6 @@ package com.flatxph.base.criteria
 
 import io.github.jhipster.service.filter.InstantFilter
 import io.github.jhipster.service.filter.StringFilter
-import kotlin.reflect.KProperty0
 
 abstract class AuditingCriteria : BaseEntityCriteria() {
 

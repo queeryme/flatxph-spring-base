@@ -6,7 +6,6 @@ import com.flatxph.base.dto.BaseDTO
 import com.flatxph.base.rest.errors.BadRequestAlertException
 import com.flatxph.base.rest.util.HeaderUtil
 import com.flatxph.base.rest.util.PaginationUtil
-import com.flatxph.base.service.definition.BaseEntityService
 import com.flatxph.base.service.definition.ReadEntityService
 import com.flatxph.base.service.query.BaseEntityQueryService
 import io.github.jhipster.web.util.ResponseUtil
@@ -15,65 +14,71 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import java.net.URI
+import com.flatxph.base.mapper.BaseEntityMapper as Mapper
+import com.flatxph.base.service.definition.BaseEntityService as Service
 
 fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readAllMixin(
-        queryService: BaseEntityQueryService<E, D, C>,
+        queryService: BaseEntityQueryService<E, C>,
         entityName: String,
         log: Logger,
+        mapper: Mapper<D, E>,
         criteria: C,
         pageable: Pageable
 ): ResponseEntity<List<D>> {
     log.debug("REST request to get $entityName by criteria: $criteria, $pageable")
-    val page = queryService.findByCriteria(criteria, pageable)
+    val page = queryService.findByCriteria(mapper, criteria, pageable)
     val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/$entityName")
     return ResponseEntity(page.content, headers, HttpStatus.OK)
 }
 
-fun <D : BaseDTO> readOneMixin(
-        service: ReadEntityService<D>,
+fun <E : BaseEntity, D: BaseDTO> readOneMixin(
+        service: ReadEntityService<E>,
         entityName: String,
         log: Logger,
-        id: Long
+        id: Long,
+        mapper: Mapper<D, E>
 ): ResponseEntity<D> {
     log.debug("REST request to get $entityName : $id")
-    val dto = service.findOne(id)
+    val dto = service.findOne(id, mapper)
     return ResponseUtil.wrapOrNotFound(dto)
 }
 
-fun <D : BaseDTO> createMixin(
-        service: BaseEntityService<D>,
+fun <E : BaseEntity, D: BaseDTO> createMixin(
+        service: Service<E>,
         entityName: String,
         log: Logger,
-        dto: D
+        dto: D,
+        mapper: Mapper<D, E>
 ): ResponseEntity<D> {
     log.debug("REST request to save $entityName : $dto")
     if (dto.id != null) {
         throw BadRequestAlertException("A new $entityName cannot already have an ID", entityName, "idExists")
     }
-    val result = service.save(dto)
+    val result = service.save(dto, mapper)
     return ResponseEntity.created(URI("/api/$entityName/" + result.id!!))
             .headers(HeaderUtil.createEntityCreationAlert(entityName, result.id!!.toString()))
             .body(result)
 }
 
-fun <D : BaseDTO> updateMixin(
-        service: BaseEntityService<D>,
+fun <E : BaseEntity, D: BaseDTO> updateMixin(
+        service: Service<E>,
         entityName: String,
         log: Logger,
-        dto: D
+        dto: D,
+        mapper: Mapper<D, E>
 ): ResponseEntity<D> {
     log.debug("REST request to update $entityName : $dto")
     if (dto.id == null) {
         throw BadRequestAlertException("Invalid id", entityName, "idNull")
     }
-    val result = service.save(dto)
+    val result = service.save(dto, mapper)
     return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(entityName, dto.id!!.toString()))
             .body(result)
 }
 
-fun <D : BaseDTO> deleteMixin(
-        service: BaseEntityService<D>,
+fun <E : BaseEntity> deleteMixin(
+        service: Service<E>,
         entityName: String,
         log: Logger,
         id: Long

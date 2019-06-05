@@ -3,7 +3,6 @@ package com.flatxph.base.dto
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.flatxph.base.DataObject
 import java.util.*
-import kotlin.reflect.KProperty0
 
 
 abstract class BaseDTO : DataObject() {

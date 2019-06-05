@@ -1,5 +1,5 @@
 package com.flatxph.base.service.definition
 
-import com.flatxph.base.dto.AuditingDTO
+import com.flatxph.base.domain.BaseEntity
 
-interface AuditingEntityService<D : AuditingDTO> : BaseEntityService<D>
+interface AuditingEntityService<E: BaseEntity> : BaseEntityService<E>

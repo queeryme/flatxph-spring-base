@@ -18,6 +18,7 @@ abstract class BaseHibernateSearchConfiguration : ApplicationListener<ContextRef
     @PersistenceContext
     protected val entityManager: EntityManager? = null
 
+    @Suppress("RedundantModalityModifier")
     @Transactional
     open fun buildConfiguration(event: ContextRefreshedEvent) {
         val fullTextEntityManager = Search.getFullTextEntityManager(entityManager)
