@@ -5,19 +5,16 @@ import com.flatxph.base.SpecificationProxy
 import com.flatxph.base.criteria.AuditingCriteria
 import com.flatxph.base.domain.AuditingEntity
 import com.flatxph.base.domain.AuditingEntity_
-import com.flatxph.base.dto.AuditingDTO
-import com.flatxph.base.mapper.AuditingEntityMapper
-import com.flatxph.base.repository.BaseEntityRepository
 import org.slf4j.Logger
 import org.springframework.data.jpa.domain.Specification
 import org.springframework.transaction.annotation.Transactional
+import com.flatxph.base.repository.BaseEntityRepository as Repository
 
 @Transactional(readOnly = true)
-abstract class AuditingEntityQueryService<E : AuditingEntity, D : AuditingDTO, C : AuditingCriteria>(
-        repository: BaseEntityRepository<E>,
-        mapper: AuditingEntityMapper<D, E>,
+abstract class AuditingEntityQueryService<E : AuditingEntity, C : AuditingCriteria>(
+        repository: Repository<E>,
         log: Logger
-) : BaseEntityQueryService<E, D, C>(repository, mapper, log) {
+) : BaseEntityQueryService<E, C>(repository, log) {
 
     override fun createSpecification(criteria: C?): Specification<E> {
         var specification = SpecificationProxy.where<E>(null)
