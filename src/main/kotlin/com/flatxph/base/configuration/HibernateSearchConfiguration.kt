@@ -10,17 +10,10 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Component
-abstract class BaseHibernateSearchConfiguration : ApplicationListener<ContextRefreshedEvent> {
+class HibernateSearchConfiguration : ApplicationListener<ContextRefreshedEvent> {
 
-    @Value("\${spring.jpa.properties.hibernate.search.async:false}")
-    protected val async: Boolean = false
-
-    @PersistenceContext
-    protected val entityManager: EntityManager? = null
-
-    @Suppress("RedundantModalityModifier")
     @Transactional
-    open fun buildConfiguration(event: ContextRefreshedEvent) {
+    override fun onApplicationEvent(event: ContextRefreshedEvent) {
         val fullTextEntityManager = Search.getFullTextEntityManager(entityManager)
         try {
             println("Started Creating Index for Hibernate Search")
@@ -30,7 +23,12 @@ abstract class BaseHibernateSearchConfiguration : ApplicationListener<ContextRef
         } catch (e: InterruptedException) {
             println("Error occurred trying to build Hibernate Search indexes $e")
         }
-
     }
+
+    @Value("\${spring.jpa.properties.hibernate.search.async:false}")
+    protected val async: Boolean = false
+
+    @PersistenceContext
+    protected val entityManager: EntityManager? = null
 
 }

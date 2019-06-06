@@ -5,32 +5,25 @@ import com.hazelcast.config.EvictionPolicy
 import com.hazelcast.config.MapConfig
 import com.hazelcast.config.MaxSizeConfig
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.EnableCaching
+import org.springframework.context.annotation.Configuration
 
-/**
- * Override hazelcastConfiguration for auto hazelcast configuration.
- * It should look like this:
- * ```
- * @EnableCaching
- * @Configuration
- * class HazelcastConfiguration {
- *      @Bean
- *      override fun hazelcastConfiguration(): Config = super.hazelcastConfiguration()
- * }
- * ```
- */
-abstract class BaseHazelcastConfiguration {
+@Suppress("SpringFacetCodeInspection")
+@Configuration
+@EnableCaching
+class HazelcastConfiguration {
 
     @Value("\${spring.application.name}")
     protected val applicationName: String? = null
 
-    open fun buildMapConfig() = MapConfig().apply {
+    fun buildMapConfig() = MapConfig().apply {
         name = applicationName
         maxSizeConfig = MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE)
         evictionPolicy = EvictionPolicy.LRU
         timeToLiveSeconds = 3600
     }
 
-    open fun buildHazelcastConfig() = Config().apply {
+    fun defaultHazelcastConfiguration() = Config().apply {
         instanceName = applicationName
         groupConfig.name = applicationName
         addMapConfig(buildMapConfig())
