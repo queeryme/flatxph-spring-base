@@ -16,7 +16,7 @@ allOpen {
 }
 
 group = 'com.flatxph'
-version = '0.0.31'
+version = '0.0.32'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -24,14 +24,14 @@ repositories {
 }
 
 ext {
-	// Common Library Versions
 	set('springCloudVersion', 'Greenwich.SR1')
 	set('jhipsterVersion', '3.0.0')
 	set('zalandoProblemVersion', '0.23.0')
 	set('hibernateVersion', '5.11.1.Final')
-
-	// Custom Library Versions
 	set('jsonWebTokenVersion', '0.9.1')
+	set('graphQLVersion', "5.0.2")
+	set('graphQLJavaToolsVersion', "5.2.4")
+	set('mapstructVersion', "1.3.0.Final")
 }
 dependencies {
 
@@ -58,7 +58,6 @@ dependencies {
 	implementation "io.github.jhipster:jhipster-framework:${jhipsterVersion}"
 	implementation "org.zalando:problem-spring-web:${zalandoProblemVersion}"
 
-	implementation 'io.github.jhipster:jhipster-framework:3.0.0'
 	implementation 'org.hibernate:hibernate-entitymanager'
 	implementation 'org.hibernate:hibernate-envers'
 	implementation 'org.hibernate.validator:hibernate-validator'
@@ -82,9 +81,14 @@ dependencies {
 	kapt 'org.hibernate:hibernate-jpamodelgen:5.4.2.Final'
 
 	// Mapstruct Configurations
-	implementation 'org.mapstruct:mapstruct-jdk8:1.3.0.Final'
-	implementation 'org.mapstruct:mapstruct:1.3.0.Final'
-	kapt 'org.mapstruct:mapstruct-processor:1.3.0.Final'
+	implementation "org.mapstruct:mapstruct-jdk8:$mapstructVersion"
+	implementation "org.mapstruct:mapstruct:$mapstructVersion"
+	kapt "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+	// GraphQL Dependencies
+	implementation("com.graphql-java:graphql-spring-boot-starter:$graphQLVersion")
+	implementation("com.graphql-java:graphiql-spring-boot-starter:$graphQLVersion")
+	implementation("com.graphql-java:graphql-java-tools:$graphQLJavaToolsVersion")
 
 	implementation("org.hibernate:hibernate-search-orm:${hibernateVersion}")
 
