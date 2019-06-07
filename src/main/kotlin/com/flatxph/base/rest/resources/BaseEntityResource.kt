@@ -23,10 +23,10 @@ fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readPagedMixin(
         log: Logger,
         mapper: Mapper<D, E>,
         criteria: C?,
-        pageable: Pageable
+        pageable: Pageable?
 ): ResponseEntity<List<D>> {
     log.debug("REST request to get $entityName by criteria: $criteria, $pageable")
-    val page = queryService.findByCriteria(mapper, criteria, pageable)
+    val page = queryService.findPagedByCriteria(mapper, criteria, pageable)
     val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/$entityName")
     return ResponseEntity(page.content, headers, HttpStatus.OK)
 }

@@ -1,12 +1,14 @@
 package com.flatxph.base.service.query
 
 
+import com.flatxph.base.ApplicationConstants
 import com.flatxph.base.SpecificationProxy
 import com.flatxph.base.domain.BaseEntity
 import com.flatxph.base.domain.BaseEntity_
 import com.flatxph.base.dto.BaseDTO
 import io.github.jhipster.service.QueryService
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
 import com.flatxph.base.criteria.BaseEntityCriteria as Criteria
@@ -17,11 +19,11 @@ abstract class BaseEntityQueryService<E : BaseEntity, C : Criteria>(val reposito
 
     fun findByCriteria(criteria: C?): List<E> = repository.findAll(createSpecification(criteria))
 
-    fun findByCriteria(criteria: C?, page: Pageable): Page<E> = repository.findAll(createSpecification(criteria), page)
-
     fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C?): List<D> = mapper.toDto(findByCriteria(criteria))
 
-    fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C?, page: Pageable): Page<D> = findByCriteria(criteria, page).map { mapper.toDto(it) }
+    fun findPagedByCriteria(criteria: C?, page: Pageable?): Page<E> = repository.findAll(createSpecification(criteria), page ?: PageRequest.of(0, ApplicationConstants.PAGE_SIZE))
+
+    fun <D : BaseDTO> findPagedByCriteria(mapper: Mapper<D, E>, criteria: C?, page: Pageable?): Page<D> = findPagedByCriteria(criteria, page).map { mapper.toDto(it) }
 
     fun createSpecification(criteria: C?): Specification<E> {
         var specification = SpecificationProxy.where<E>(null)
