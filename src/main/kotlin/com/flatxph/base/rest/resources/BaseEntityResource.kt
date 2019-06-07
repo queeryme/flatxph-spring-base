@@ -17,18 +17,30 @@ import java.net.URI
 import com.flatxph.base.mapper.BaseEntityMapper as Mapper
 import com.flatxph.base.service.definition.BaseEntityService as Service
 
-fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readAllMixin(
+fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readPagedMixin(
         queryService: BaseEntityQueryService<E, C>,
         entityName: String,
         log: Logger,
         mapper: Mapper<D, E>,
-        criteria: C,
+        criteria: C?,
         pageable: Pageable
 ): ResponseEntity<List<D>> {
     log.debug("REST request to get $entityName by criteria: $criteria, $pageable")
     val page = queryService.findByCriteria(mapper, criteria, pageable)
     val headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/$entityName")
     return ResponseEntity(page.content, headers, HttpStatus.OK)
+}
+
+fun <E : BaseEntity, D : BaseDTO, C : BaseEntityCriteria> readAllMixin(
+        queryService: BaseEntityQueryService<E, C>,
+        entityName: String,
+        log: Logger,
+        mapper: Mapper<D, E>,
+        criteria: C?
+): ResponseEntity<List<D>> {
+    log.debug("REST request to get $entityName by criteria: $criteria")
+    val list = queryService.findByCriteria(mapper, criteria)
+    return ResponseEntity(list, HttpStatus.OK)
 }
 
 fun <E : BaseEntity, D: BaseDTO> readOneMixin(

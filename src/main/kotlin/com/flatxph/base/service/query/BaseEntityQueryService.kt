@@ -19,9 +19,9 @@ abstract class BaseEntityQueryService<E : BaseEntity, C : Criteria>(val reposito
 
     fun findByCriteria(criteria: C?, page: Pageable): Page<E> = repository.findAll(createSpecification(criteria), page)
 
-    fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C): List<D> = mapper.toDto(findByCriteria(criteria))
+    fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C?): List<D> = mapper.toDto(findByCriteria(criteria))
 
-    fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C, page: Pageable): Page<D> = findByCriteria(criteria, page).map { mapper.toDto(it) }
+    fun <D : BaseDTO> findByCriteria(mapper: Mapper<D, E>, criteria: C?, page: Pageable): Page<D> = findByCriteria(criteria, page).map { mapper.toDto(it) }
 
     fun createSpecification(criteria: C?): Specification<E> {
         var specification = SpecificationProxy.where<E>(null)
