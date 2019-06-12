@@ -1,5 +1,6 @@
 package com.flatxph.base.domain
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import com.flatxph.base.DataObject
 import java.util.*
 import javax.persistence.*
@@ -9,6 +10,7 @@ abstract class BaseEntity : DataObject() {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonAlias("objectID")
     var id: Long? = null
 
     override val fieldList get() = listOf(this::id) + super.fieldList
