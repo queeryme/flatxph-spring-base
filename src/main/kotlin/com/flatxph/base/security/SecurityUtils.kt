@@ -17,12 +17,12 @@ object SecurityUtils {
     val currentUserLogin: Optional<String>
         get() {
             val securityContext = SecurityContextHolder.getContext()
-            return Optional.ofNullable(securityContext.authentication)
-                    .map {
-                        if (it.principal is UserDetails) (it.principal as UserDetails).username
-                        else if (it.principal is String) it.principal
-                        null
-                    }
+            val authentication = securityContext.authentication ?: return Optional.empty()
+
+            val principal: Any? = authentication.principal ?: return Optional.empty()
+            if (principal is UserDetails) return Optional.of(principal.username)
+            if (principal is String) return Optional.of(principal)
+            return Optional.empty()
         }
 
     val currentUserJWT: Optional<String>
