@@ -6,6 +6,7 @@ import com.hazelcast.config.MapConfig
 import com.hazelcast.config.MaxSizeConfig
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.EnableCaching
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Suppress("SpringFacetCodeInspection")
@@ -23,6 +24,7 @@ class HazelcastConfiguration {
         timeToLiveSeconds = 3600
     }
 
+    @Bean
     fun defaultHazelcastConfiguration() = Config().apply {
         instanceName = applicationName
         groupConfig.name = applicationName
