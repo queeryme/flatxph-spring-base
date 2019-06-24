@@ -25,7 +25,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', 'Greenwich.SR1')
-	set('jhipsterVersion', '3.0.0')
+	set('jhipsterVersion', '3.0.3')
 	set('zalandoProblemVersion', '0.23.0')
 	set('hibernateVersion', '5.11.1.Final')
 	set('jsonWebTokenVersion', '0.9.1')
