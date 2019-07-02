@@ -99,6 +99,11 @@ dependencies {
 
     implementation("org.hibernate:hibernate-search-orm:${hibernateVersion}")
 
+    // Google Cloud Storage
+    implementation("com.google.cloud:google-cloud-storage:+")
+    implementation("org.imgscalr:imgscalr-lib:+")
+
+
     implementation("org.apache.commons:commons-lang3")
 }
 
